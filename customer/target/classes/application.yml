@@ -1,6 +1,17 @@
 server:
   port: 8080
-
 spring:
   application:
     name: customer
+  datasource:
+    password: pgpass
+    url: jdbc:postgresql://localhost:5432/customer #localhost because the app start on a local machine. else it would need to connect via the network
+    username: pguser                               #customer is the name of the database that we will have to connect to
+    jpa:
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+          format_sql: true
+      hibernate:
+        ddl-auto: update
+      show-sql: true

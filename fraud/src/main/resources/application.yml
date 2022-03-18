@@ -1,0 +1,17 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: fraud
+  datasource:
+    username: pguser
+    password: pgpass
+    url: jdbc:postgresql://localhost:5432/fraud #localhost because the app start on a local machine. else it would need to connect via the network
+    jpa: #fraud is the name of the database that we will have to connect to
+      hibernate:
+        ddl-auto: update
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+          format_sql: true
+      show-sql: true
