@@ -19,6 +19,6 @@ public class FraudCheckService {
                         .createdAt(LocalDateTime.now())
                         .build()
         );
-        return false;
+        return false; //Just for testing
     }
 }

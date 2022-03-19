@@ -1,0 +1,23 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: notification
+  datasource:
+    username: pguser
+    password: pgpass
+    url: jdbc:postgresql://localhost:5432/notification #localhost because the app start on a local machine. else it would need to connect via the network
+  jpa: #fraud is the name of the database that we will have to connect to
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: true
+    registrer-with-eureka: true

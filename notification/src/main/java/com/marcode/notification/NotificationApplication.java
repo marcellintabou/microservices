@@ -1,4 +1,4 @@
-package com.marcode.customer;
+package com.marcode.notification;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,12 +7,12 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableEurekaClient
-@EnableFeignClients(
+/*@EnableFeignClients(
         basePackages = "com.marcode.clients"
-)
-public class CustomerApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(CustomerApplication.class, args);
+)*/
+public class NotificationApplication {
 
+    public static void main(String[] args) {
+        SpringApplication.run(NotificationApplication.class, args);
     }
 }
