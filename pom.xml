@@ -12,6 +12,7 @@
   <modules>
     <module>customer</module>
     <module>fraud</module>
+    <module>eureka-server</module>
   </modules>
 
   <name>marcoservices</name>
@@ -22,6 +23,7 @@
     <maven.compiler.target>17</maven.compiler.target>
     <spring.boot.maven.plugin.version>2.5.7</spring.boot.maven.plugin.version>
     <spring.boot.dependencies.version>2.5.7</spring.boot.dependencies.version>
+    <spring.cloud-version>2020.0.3</spring.cloud-version>
   </properties>
 
   <dependencyManagement><!-- All modules or sub-project will import the dependency that it want from here -->
@@ -33,11 +35,15 @@
         <scope>import</scope>
         <type>pom</type>
       </dependency>
-
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring.cloud-version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
     </dependencies>
   </dependencyManagement>
-
-
   <dependencies> <!-- All modules by default these dependencies without implicitly importing it -->
     <dependency>
       <groupId>org.projectlombok</groupId>
@@ -48,7 +54,6 @@
       <artifactId>spring-boot-starter-test</artifactId>
     </dependency>
   </dependencies>
-
   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
@@ -57,7 +62,6 @@
           <artifactId>spring-boot-maven-plugin</artifactId>
           <version>${spring.boot.maven.plugin.version}</version>
         </plugin>
-
       </plugins>
     </pluginManagement>
   </build>

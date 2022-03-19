@@ -3,7 +3,7 @@ package com.marcode.fraud;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,9 +15,9 @@ public class FraudController {
 
     private final FraudCheckService fraudCheckService;
 
-    @PostMapping(path = "{customerId}")
-    public FraudCheckresponse isFraudster(@PathVariable("customerId") Integer customerId){
-
-        return new FraudCheckresponse(fraudCheckService.isFraudulentCustomer(customerId));
+    @GetMapping(path = "{customerId}")
+    public FraudCheckResponse isFraudster(@PathVariable("customerId") Integer customerId){
+        log.info("Fraud check request for customer {}", customerId);
+        return new FraudCheckResponse(fraudCheckService.isFraudulentCustomer(customerId));
     }
 }
