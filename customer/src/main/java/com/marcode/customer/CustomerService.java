@@ -1,5 +1,6 @@
 package com.marcode.customer;
 
+import com.marcode.amqp.RabbitMQMessageProducer;
 import com.marcode.clients.fraud.FraudCheckResponse;
 import com.marcode.clients.fraud.FraudClient;
 import com.marcode.clients.notification.NotificationClient;
@@ -10,9 +11,11 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public record CustomerService(
         CustomerRepository customerRepository,
-        RestTemplate restTemplate,
+        //RestTemplate restTemplate, //no more needed
         FraudClient fraudClient,
-        NotificationClient notificationClient){
+        //NotificationClient notificationClient, //no more needed
+        RabbitMQMessageProducer rabbitMQMessageProducer
+    ){
 
     public void registerCustomer(CustomerRegistrationRequest customerRegistrationRequest) {
         Customer customer = Customer.builder()
@@ -35,13 +38,26 @@ public record CustomerService(
         if(fraudCheckResponse.isFraudster()) {
             throw new IllegalStateException("fraudster found");  //Todo: implement good message or status
         } else {
-            NotificationRequest notificationSendResponse = notificationClient.sendNotification(
+            /*  no more needed
+                notificationClient.sendNotification(
                     new NotificationRequest(
                             customer.getId(),
                             customer.getEmail(),
                             String.format("Hi %s, welcome to Marcode ...", customer.getFirstName())
                     )
+            );*/
+
+            //Send async message. i.e add to queue
+            NotificationRequest notificationRequest = new NotificationRequest(
+                customer.getId(),
+                customer.getEmail(),
+                String.format("Hi %s, welcome to Marcode ...", customer.getFirstName())
             );
+            rabbitMQMessageProducer.publish(
+                    notificationRequest,
+                    "internal.exchange",
+                    "internal.notification.routing-key"
+                    );
         }
 
     }
