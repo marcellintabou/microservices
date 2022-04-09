@@ -1,0 +1,27 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: fraud
+  datasource:
+    username: pguser
+    password: pgpass
+    url: jdbc:postgresql://postgres:5432/fraud #LOCALHOST or CONTAINER_NAME of the database
+  jpa: #fraud is the name of the database that we will have to connect to
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+  zipkin:
+    enabled: true
+    base-url: http://zipkin:9411
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+    fetch-registry: true
+    registrer-with-eureka: true
